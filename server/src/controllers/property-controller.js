@@ -18,6 +18,8 @@ module.exports = {
           image,
           date,
         });
+
+        return res.status(201).json(property);
       }
 
       return res.status(200).json(property);

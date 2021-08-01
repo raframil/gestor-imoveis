@@ -35,7 +35,7 @@ router.post(
       }),
     },
     {
-      abortEarly: false, //retorna todos as mensagens de erros e seus campos de uma vez
+      abortEarly: false,
     }
   ),
   PropertyController.store
