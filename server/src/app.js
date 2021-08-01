@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/healthcheck", (req, res) => {
-  res.status(200).json({ msg: "Ok" });
+  res.status(200).json({ msg: "ok" });
 });
 
 app.use(cors());

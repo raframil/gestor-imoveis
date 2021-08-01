@@ -3,6 +3,8 @@ const router = express.Router();
 const { celebrate, Joi } = require("celebrate");
 const SaleController = require("../controllers/sale-controller");
 
+router.get("/sales", SaleController.list);
+
 router.post(
   "/sales",
   celebrate(

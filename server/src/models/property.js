@@ -29,6 +29,10 @@ const PropertySchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  sale: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Sale",
+  },
 });
 
 module.exports = mongoose.model("Property", PropertySchema);

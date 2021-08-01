@@ -1,12 +1,28 @@
 const Property = require("../models/property");
+const Sale = require("../models/sale");
 
 module.exports = {
   async list(req, res) {
     try {
-      const properties = await Property.find();
+      const { includeSold } = req.query;
+
+      if (+includeSold === 1) {
+        const properties = await Property.find().populate("sale");
+        return res.json(properties);
+      }
+
+      const sales = await Sale.find();
+      const properties = await Property.find({
+        _id: {
+          $nin: sales.map((sale) => {
+            return sale.property;
+          }),
+        },
+      });
+
       return res.json(properties);
     } catch (error) {
-      return res.status(500).json({ error: "SERVER_ERROR" });
+      return res.status(500).json(error);
     }
   },
 
@@ -57,7 +73,7 @@ module.exports = {
       const updated = await Property.findOne({ id });
       return res.json(updated);
     } catch (error) {
-      return res.status(500).json({ error: "SERVER_ERROR" });
+      return res.status(500).json(error);
     }
   },
 
@@ -74,7 +90,7 @@ module.exports = {
       await Property.deleteOne({ id });
       return res.json({ success: true });
     } catch (error) {
-      return res.status(500).json({ error: "SERVER_ERROR" });
+      return res.status(500).json(error);
     }
   },
 };
