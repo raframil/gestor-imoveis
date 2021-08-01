@@ -22,7 +22,7 @@ module.exports = {
         return res.status(201).json(property);
       }
 
-      return res.status(200).json(property);
+      return res.status(409).json(property);
     } catch (error) {
       return res.status(400).json(error);
     }
