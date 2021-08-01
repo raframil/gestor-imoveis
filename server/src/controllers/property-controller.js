@@ -48,9 +48,13 @@ module.exports = {
         return res.status(404).json({ error: `Property ${id} not found` });
       }
 
-      await Property.updateOne({ description, sellerName, price, image, date });
-      let updated = await Property.findOne({ id });
+      await Property.updateOne(
+        { id },
+        { $set: { description, sellerName, price, image, date } },
+        { omitUndefined: true }
+      );
 
+      const updated = await Property.findOne({ id });
       return res.json(updated);
     } catch (error) {
       return res.status(500).json({ error: "SERVER_ERROR" });

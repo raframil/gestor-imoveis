@@ -14,7 +14,7 @@ const mockProperty = {
   date: "2021-07-31T00:00:00.000Z",
 };
 
-describe("POST /properties", () => {
+describe("GET/POST/PUT/DELETE in /properties", () => {
   beforeAll(async () => {
     const url = process.env.MONGODB_URL;
     await mongoose.connect(url, {
