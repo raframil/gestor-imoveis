@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NavigationComponent } from './dashboard/navigation/navigation.component';
+import { ProfessionalListComponent } from './dashboard/professionals/professional-list/professional-list.component';
 import { PropertiesComponent } from './dashboard/properties/list-property/properties.component';
 
 const routes: Routes = [
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'imoveis',
         component: PropertiesComponent,
+      },
+      {
+        path: 'corretores',
+        component: ProfessionalListComponent,
       },
     ],
   },

@@ -26,7 +26,7 @@
 
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Preço solicitado</mat-label>
-            <input matInput placeholder="Preço solicitado" formControlName="price" required>
+            <input matInput placeholder="Preço solicitado" formControlName="price" currencyMask required>
         </mat-form-field>
 
         <mat-form-field class="full-width" appearance="outline">
@@ -36,7 +36,8 @@
 
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Data de cadastro</mat-label>
-            <input matInput placeholder="Data de cadastro" formControlName="date" required>
+            <input matInput placeholder="Data de cadastro" formControlName="date" mask="00/00/0000"
+                [dropSpecialCharacters]="false" required>
         </mat-form-field>
     </form>
 </div>

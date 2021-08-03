@@ -1,7 +1,7 @@
+import { Property } from './../models/property';
 import { EditPropertyComponent } from '../edit-property/edit-property.component';
 import { PropertiesService } from '../services/properties.service';
 import { Component, OnInit } from '@angular/core';
-import { Property } from '../models/property';
 import {
   ConfirmDialogComponent,
   ConfirmDialogModel,
@@ -102,7 +102,6 @@ export class PropertiesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.warn(result);
       if (result) {
         this.propertiesService.delete(property.id).subscribe(
           (res) => {
@@ -114,5 +113,9 @@ export class PropertiesComponent implements OnInit {
         );
       }
     });
+  }
+
+  onImgError(event) {
+    event.target.src = 'assets/houseplaceholder.jpg';
   }
 }

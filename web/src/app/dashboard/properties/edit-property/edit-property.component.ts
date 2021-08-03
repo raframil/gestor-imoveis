@@ -1,3 +1,4 @@
+import { UtilService } from './../../../core/services/util/util.service';
 import { PropertiesService } from './../services/properties.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +18,7 @@ export class EditPropertyComponent implements OnInit {
     public dialogRef: MatDialogRef<EditPropertyComponent>,
     private formBuilder: FormBuilder,
     private propertiesService: PropertiesService,
+    private utilService: UtilService,
     @Inject(MAT_DIALOG_DATA) public data: Property
   ) {
     this.property = data;
@@ -33,7 +35,10 @@ export class EditPropertyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const date = this.property.date.toString().split('T')[0];
+    const formatDate = this.utilService.fromDate(date);
     this.form.patchValue(this.property);
+    this.form.get('date').setValue(formatDate);
   }
 
   update() {
@@ -41,6 +46,8 @@ export class EditPropertyComponent implements OnInit {
     const id = this.form.get('id').value;
     delete property.id;
     delete property.type;
+    property.date = this.utilService.toDate(property.date.toString());
+
     this.propertiesService.update(id, property).subscribe(
       (res) => {
         console.log(res);

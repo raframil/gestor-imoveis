@@ -12,6 +12,27 @@ import { EditPropertyComponent } from './properties/edit-property/edit-property.
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddPropertyComponent } from './properties/add-property/add-property.component';
 import { PropertiesComponent } from './properties/list-property/properties.component';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { ToastrModule } from 'ngx-toastr';
+import { ProfessionalListComponent } from './professionals/professional-list/professional-list.component';
+
+export const customCurrencyMaskConfig = {
+  align: 'left',
+  allowNegative: true,
+  allowZero: true,
+  decimal: ',',
+  precision: 2,
+  prefix: 'R$ ',
+  suffix: '',
+  thousands: '.',
+  nullable: true,
+  min: null,
+  max: null,
+  inputMode: CurrencyMaskInputMode.FINANCIAL,
+};
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -20,6 +41,7 @@ import { PropertiesComponent } from './properties/list-property/properties.compo
     NavigationComponent,
     EditPropertyComponent,
     AddPropertyComponent,
+    ProfessionalListComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +52,9 @@ import { PropertiesComponent } from './properties/list-property/properties.compo
     HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    NgxMaskModule.forRoot(),
+    ToastrModule.forRoot(),
   ],
 })
 export class DashboardModule {}
