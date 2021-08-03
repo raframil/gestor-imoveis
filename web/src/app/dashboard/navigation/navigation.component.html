@@ -1,0 +1,41 @@
+<mat-sidenav-container color="primary" class="sidenav-container">
+    <mat-sidenav color="secondary" #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
+        <mat-toolbar>
+            <img src="/assets/logo.png" alt="Logo do sistema" width="100%" />
+        </mat-toolbar>
+
+        <mat-nav-list>
+            <a mat-list-item routerLink="/" routerLinkActive="active-list-item">
+                <mat-icon>home</mat-icon> <span class="nav-caption">Imóveis</span>
+            </a>
+
+            <a mat-list-item routerLink="/corretores" routerLinkActive="active-list-item">
+                <mat-icon>account_circle</mat-icon> <span class="nav-caption">Corretores</span>
+            </a>
+
+            <a mat-list-item routerLink="/vendas" routerLinkActive="active-list-item">
+                <mat-icon>paid</mat-icon> <span class="nav-caption">Vendas</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary" class="fixed-toolbar mat-elevation-z2">
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <span class="spacer"></span>
+        </mat-toolbar>
+        <div [ngClass]="{ foreground: loading }" style="height: 88vh">
+            <div class="center" fxLayout="row" fxLayoutAlign="center center">
+                <div fxFlex="100">
+                    <mat-spinner class="mx-auto center" *ngIf="loading" [diameter]="50"> </mat-spinner>
+                </div>
+            </div>
+            <div [ngClass]="{ background: loading }" style="padding: 2em">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,44 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+::ng-deep .mat-menu-content {
+  width: 220px;
+}
+
+.active-list-item {
+  background-color: var(--primary);
+  color: white;
+}
+
+.mat-nav-list .mat-list-item:hover {
+  transition: all 0.3s ease;
+  background-color: #683ab7cb;
+  color: white;
+}
+
+.mat-nav-list .mat-list-item:focus {
+  background-color: var(--primary);
+  color: white;
+}
+
+.mat-nav-list .mat-list-item {
+  padding: 1em 0;
+  margin: 1em 0;
+}
+
+.nav-caption {
+  margin-left: 5%;
+}
