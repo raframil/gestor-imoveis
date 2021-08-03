@@ -1,9 +1,5 @@
 <div class="content" *ngIf="!loading; else indicator">
-    <div *ngIf="properties?.length > 0">
-        <h1 class="mat-display-1">Imóveis disponíveis</h1>
-    </div>
-
-    <div *ngIf="properties?.length === 0 || !properties">
+    <div>
         <h1 class="mat-display-1">Não há corretores cadastrados</h1>
     </div>
 
