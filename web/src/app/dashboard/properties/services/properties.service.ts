@@ -22,4 +22,16 @@ export class PropertiesService {
       params,
     });
   }
+
+  create(property: Property): Observable<any> {
+    return this.http.post<Property>(`${this.url}/properties`, property);
+  }
+
+  update(id: string, property: Property): Observable<any> {
+    return this.http.put<Property>(`${this.url}/properties/${id}`, property);
+  }
+
+  delete(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.url}/properties/${id}`);
+  }
 }

@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Criar imóvel</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Código</mat-label>
+            <input matInput placeholder="Código do imóvel" formControlName="id" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline" disabled>
+            <mat-label>Tipo do imóvel</mat-label>
+            <input matInput placeholder="Tipo do imóvel" formControlName="type" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Descrição</mat-label>
+            <textarea #description matInput formControlName="description" placeholder="Descrição" maxlength="255"
+                required></textarea>
+            <mat-hint align="end">{{ description.value.length }} / 255</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nome do proprietário</mat-label>
+            <input matInput placeholder="Nome do proprietário" formControlName="sellerName" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Preço solicitado</mat-label>
+            <input matInput placeholder="Preço solicitado" formControlName="price" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Endereço da imagem</mat-label>
+            <input matInput placeholder="Endereço da imagem" formControlName="image" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Data de cadastro</mat-label>
+            <input matInput placeholder="Data de cadastro" formControlName="date" required>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-button (click)="onDismiss()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="create()">Salvar</button>
+</div>
