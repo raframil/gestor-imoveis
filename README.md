@@ -11,7 +11,7 @@ Sistema para Controle de Vendas de Imóveis
    4.  Você precisará da string de conexão com seu banco de dados, conforme a [documentação](https://docs.mongodb.com/manual/reference/connection-string/)
 2. Clone este repositório em sua máquina
 
-### Configurando o servidor
+### Configurando o backend (API Node.js)
 
 1. Abra a pasta "server"
 2. Abra um terminal nesta pasta
@@ -22,7 +22,7 @@ Sistema para Controle de Vendas de Imóveis
 7. Você pode abrir no navegador o endeeço ```localhost:3000/healthcheck``` para verificar se a API está online
 
 
-### Configurando o front (Angular)
+### Configurando o frontend (Angular)
 
 1. Abra a pasta "web"
 2. Abra um terminal nesta pasta
