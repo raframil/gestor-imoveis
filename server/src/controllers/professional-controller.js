@@ -9,7 +9,7 @@ module.exports = {
 
       let professionals = await Professional.find();
 
-      if (income) {
+      if (+income === 1) {
         let sales = [];
 
         if (month && year) {
