@@ -242,7 +242,7 @@ module.exports = {
         return res.status(404).json({ error: `Professional ${id} not found` });
       }
 
-      await Professional.deleteOne({ id });
+      await Professional.deleteOne({ _id: id });
       return res.json({ success: true });
     } catch (error) {
       return res.status(500).json({ error: "SERVER_ERROR" });
