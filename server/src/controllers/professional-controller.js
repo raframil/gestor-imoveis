@@ -1,12 +1,94 @@
+const professional = require("../models/professional");
 const Professional = require("../models/professional");
 const Sale = require("../models/sale");
 
 module.exports = {
   async list(req, res) {
     try {
-      const professionals = await Professional.find();
+      const { income, month, year } = req.query;
+
+      let professionals = await Professional.find();
+
+      if (income) {
+        let sales = [];
+
+        if (month && year) {
+          sales = await Sale.find({
+            $expr: {
+              $and: [
+                {
+                  $eq: [
+                    {
+                      $month: "$saleDate",
+                    },
+                    +month,
+                  ],
+                },
+                {
+                  $eq: [
+                    {
+                      $year: "$saleDate",
+                    },
+                    +year,
+                  ],
+                },
+              ],
+            },
+          });
+        } else {
+          sales = await Sale.find();
+        }
+
+        professionals = professionals.map((professional) => {
+          let professionalSales = sales.filter((sale) => {
+            return sale.seller.equals(professional._id);
+          });
+
+          professionalSales = professionalSales.map((sale) => {
+            const saleComission =
+              (professional.commissionPercentage * sale.salePrice) / 100;
+
+            return { ...sale.toObject(), saleComission };
+          });
+
+          let calculatedIncome = 0;
+          let comissionSum = 0;
+          for (const sale of professionalSales) {
+            calculatedIncome +=
+              Number(sale.salePrice) - Number(sale.saleComission);
+
+            comissionSum += Number(sale.saleComission);
+          }
+
+          const serialized = {
+            ...professional.toObject(),
+            professionalSales,
+            calculatedIncome,
+            comissionSum,
+          };
+
+          return serialized;
+        });
+
+        let highestCommissionValue = 0;
+        let highestComissionProfessional = null;
+        for await (const professional of professionals) {
+          if (professional.comissionSum > highestCommissionValue) {
+            highestCommissionValue = professional.comissionSum;
+            highestComissionProfessional = professional;
+          }
+        }
+
+        return res.json({
+          professionals,
+          highestCommissionValue,
+          highestComissionProfessional,
+        });
+      }
+
       return res.json(professionals);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ error: "SERVER_ERROR" });
     }
   },
