@@ -4,6 +4,7 @@ const { celebrate, Joi } = require("celebrate");
 const ProfessionalController = require("../controllers/professional-controller");
 
 router.get("/professionals", ProfessionalController.list);
+router.get("/professionals/:id", ProfessionalController.getById);
 
 router.post(
   "/professionals",
