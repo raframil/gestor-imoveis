@@ -5,10 +5,77 @@ const Professional = require("../models/professional");
 module.exports = {
   async list(req, res) {
     try {
-      const sales = await Sale.find();
+      const { income, month, year } = req.query;
+
+      let sales = [];
+
+      if (month && year) {
+        sales = await Sale.find({
+          $expr: {
+            $and: [
+              {
+                $eq: [
+                  {
+                    $month: "$saleDate",
+                  },
+                  +month,
+                ],
+              },
+              {
+                $eq: [
+                  {
+                    $year: "$saleDate",
+                  },
+                  +year,
+                ],
+              },
+            ],
+          },
+        })
+          .populate("seller")
+          .populate("property");
+      } else {
+        sales = await Sale.find().populate("seller").populate("property");
+      }
+
+      if (+income === 1) {
+        let totalRevenues = 0;
+        let totalComissionPaid = 0;
+        let totalSalaryPaid = 0;
+
+        for await (sale of sales) {
+          const saleComission =
+            (sale.seller.commissionPercentage * sale.salePrice) / 100;
+
+          if (sale.seller.salary) {
+            totalSalaryPaid += Number(sale.seller.salary);
+          }
+
+          totalComissionPaid += saleComission;
+        }
+
+        sales = sales.map((sale) => {
+          const profit = sale.salePrice * 0.05;
+          totalRevenues += profit;
+          return { ...sale.toObject(), profit };
+        });
+
+        const totalProfit =
+          totalRevenues - (totalComissionPaid + totalSalaryPaid);
+
+        return res.json({
+          sales,
+          totalRevenues,
+          totalComissionPaid,
+          totalSalaryPaid,
+          totalProfit,
+        });
+      }
+
       return res.json(sales);
     } catch (error) {
-      return res.status(500).json({ error: "SERVER_ERROR" });
+      console.log(error);
+      return res.status(500).json({ msg: "SERVER_ERROR", error });
     }
   },
 

@@ -1,16 +1,56 @@
 const Property = require("../models/property");
 const Sale = require("../models/sale");
+const dayjs = require("dayjs");
 
 module.exports = {
   async list(req, res) {
     try {
-      const { includeSold } = req.query;
+      const { includeSold, stranded, onlySold } = req.query;
 
+      if (+onlySold === 1) {
+        const sales = await Sale.find();
+        const properties = await Property.find({
+          _id: {
+            $in: sales.map((sale) => {
+              return sale.property;
+            }),
+          },
+        });
+
+        return res.json(properties);
+      }
+
+      // imoveis encalhados
+      if (+stranded === 1) {
+        const sales = await Sale.find();
+        let properties = await Property.find({
+          _id: {
+            $nin: sales.map((sale) => {
+              return sale.property;
+            }),
+          },
+        });
+
+        const currentDate = dayjs(new Date());
+
+        properties = properties.filter((property) => {
+          const propertyDate = dayjs(property.date);
+          const diff = currentDate.diff(propertyDate, "month");
+          if (diff >= 6) {
+            return property;
+          }
+        });
+
+        return res.json(properties);
+      }
+
+      // inclui imoveis vendidos
       if (+includeSold === 1) {
         const properties = await Property.find().populate("sale");
         return res.json(properties);
       }
 
+      // filtra imoveis nao vendidos
       const sales = await Sale.find();
       const properties = await Property.find({
         _id: {
@@ -22,6 +62,7 @@ module.exports = {
 
       return res.json(properties);
     } catch (error) {
+      console.log(error);
       return res.status(500).json(error);
     }
   },
