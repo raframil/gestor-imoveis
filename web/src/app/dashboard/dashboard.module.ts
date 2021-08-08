@@ -16,6 +16,12 @@ import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { ToastrModule } from 'ngx-toastr';
 import { ProfessionalListComponent } from './professionals/professional-list/professional-list.component';
+import { EditProfessionalComponent } from './professionals/professional-edit/edit-professional.component';
+import { AddProfessionalComponent } from './professionals/professional-add/add-professional.component';
+import { AddSaleComponent } from './sales/add-sale/add-sale.component';
+import { SalesComponent } from './sales/list-sale/sales.component';
+
+
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -42,6 +48,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     EditPropertyComponent,
     AddPropertyComponent,
     ProfessionalListComponent,
+    EditProfessionalComponent,
+    AddProfessionalComponent,
+    AddSaleComponent,
+    SalesComponent,
   ],
   imports: [
     CommonModule,

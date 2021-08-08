@@ -1,0 +1,61 @@
+<div class="content" *ngIf="!loading; else indicator">
+    <div *ngIf="sales?.length > 0">
+        <h1 class="mat-display-1">Vendas</h1>
+    </div>
+
+    <div *ngIf="sales?.length === 0 || !sales">
+        <h1 class="mat-display-1">Não há Vendas cadastrados</h1>
+    </div>
+
+     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px" fxLayoutAlign="space-between right">
+        <!-- <mat-form-field appearance="outline">
+            <mat-label>Vendedores</mat-label>
+            <mat-select (selectionChange)="onChange($event.value)">
+                <mat-option value="all">Todos</mat-option>
+                <mat-option *ngFor="let seller of sellers" [value]="seller._id">
+                  {{ seller.name }} ({{ seller.creci }})
+                </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+
+        <div fxLayout="row" fxLayoutAlign="end right" fxFlex="100" fxLayoutGap="5px">
+            <button mat-raised-button color="primary" (click)="create()">
+                <mat-icon>add</mat-icon> Adicionar venda
+            </button>
+        </div>
+      </div>
+      <br>
+      <br>
+   <div fxLayout="row wrap" fxLayoutGap="16px grid">
+        <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let sale of sales">
+            <mat-card class="mat-elevation-z4">
+                <mat-card-header>
+                    <mat-card-title>{{ sale.saleDate | date: 'shortDate':'UTC':'pt-BR' }} </mat-card-title>
+                    <mat-card-subtitle>Comprador: {{ sale.buyerName }} </mat-card-subtitle>
+                    <br>
+                  </mat-card-header>
+                  <a href="{{ sale.property.image }}" target="_blank">
+                    <img mat-card-image src="{{ sale.property.image }}" (error)="onImgError($event)" *ngIf="sale.property.image">
+                </a>
+                <img mat-card-image src="/assets/houseplaceholder.jpg" alt="placeholder de uma casa"
+                    *ngIf="!sale.property.image" />
+                  <mat-card-content style="text-align: center">
+                    <p class="mat-body-1"><b style="margin-bottom: 10px">Vendedor</b><br>Nome: {{ sale.seller.name }}<br>Creci: {{ sale.seller.creci }} </p>
+                    <hr>
+                    <p class="mat-body-1"><b style="margin-bottom: 10px">Propriedade</b><br>ID: {{ sale.property.id }}<br>Tipo: {{ sale.property.type }} </p>
+                    <p class="mat-body-1">{{ sale.propertyId }}</p>
+                    <br />
+                    <span class="mat-subheading-2 price" color="accent">
+                        {{ sale.salePrice | currency: 'BRL' }}
+                    </span>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+<ng-template #indicator>
+    <lottie-player class=" spinner" src="https://assets7.lottiefiles.com/datafiles/bEYvzB8QfV3EM9a/data.json"
+        background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay>
+    </lottie-player>
+</ng-template>

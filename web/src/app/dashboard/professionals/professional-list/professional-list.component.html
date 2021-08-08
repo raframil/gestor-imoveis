@@ -1,4 +1,4 @@
-<div class="content" *ngIf="!loading; else indicator">
+<!-- <div class="content" *ngIf="!loading; else indicator">
     <div>
         <h1 class="mat-display-1">Não há corretores cadastrados</h1>
     </div>
@@ -16,4 +16,81 @@
     <lottie-player class=" spinner" src="https://assets7.lottiefiles.com/datafiles/bEYvzB8QfV3EM9a/data.json"
         background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay>
     </lottie-player>
+</ng-template> -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"/>
+
+<div class="content" *ngIf="!loading; else indicator">
+  <div *ngIf="professionals?.length > 0">
+      <h1 class="mat-display-1">Corretores disponíveis</h1>
+  </div>
+
+  <div *ngIf="professionals?.length === 0 || !professionals">
+      <h1 class="mat-display-1">Não há corretores cadastrados</h1>
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px" fxLayoutAlign="space-between center">
+      <mat-form-field appearance="outline">
+          <mat-label>Tipo do corretor</mat-label>
+          <mat-select (selectionChange)="onChange($event.value)">
+              <mat-option value="all">Todos</mat-option>
+              <mat-option *ngFor="let type of availableTypes" [value]="type">
+                  {{ type }}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxFlex="50" fxLayoutGap="5px">
+          <button mat-raised-button color="primary" (click)="create()">
+              <mat-icon>add</mat-icon> Adicionar corretor
+          </button>
+      </div>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+      <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let professional of professionals">
+          <mat-card class="mat-elevation-z4">
+              <mat-card-header>
+                  <mat-card-title>{{ professional.name }}</mat-card-title>
+                  <mat-card-subtitle>Creci: {{ professional.creci }} </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                  <span class="mat-subheading-1 price" color="accent">
+                    <b>Tipo</b>  {{ professional.type }}
+                  </span>
+                  <br />
+                  <span class="mat-subheading-1 price" color="accent">
+                    <b>Salário</b>  {{ professional.salary | currency: 'BRL' }}
+                  </span>
+                  <br />
+                  <span class="mat-subheading-1"><b>Data de admissão </b>{{ professional.admissionDate | date: 'shortDate':'UTC':'pt-BR' }}</span>
+                  <p class="mat-body-1"><b>Comissão </b>{{ professional.commissionPercentage }}</p>
+              </mat-card-content>
+              <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+                  <button mat-fab color="accent" aria-label="Botao de edicao" (click)="edit(professional)">
+                      <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-fab color="warn" aria-label="Botao de exclusao" (click)="delete(professional)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </mat-card-actions>
+          </mat-card>
+      </div>
+  </div>
+
+</div>
+
+<ng-template #indicator>
+  <lottie-player class=" spinner" src="https://assets7.lottiefiles.com/datafiles/bEYvzB8QfV3EM9a/data.json"
+      background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay>
+  </lottie-player>
 </ng-template>
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+
+  $(document).ready(function() {
+      $('#example').DataTable();
+  } );
+</script>

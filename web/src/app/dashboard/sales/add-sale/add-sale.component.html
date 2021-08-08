@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Criar venda</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Preço da venda</mat-label>
+            <input matInput placeholder="Preço da venda" formControlName="salePrice" currencyMask required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Data da venda</mat-label>
+            <input matInput placeholder="Data da venda" formControlName="saleDate" mask="00/00/0000"
+                [dropSpecialCharacters]="false" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Nome do comprador</mat-label>
+          <input matInput placeholder="Nome do comprador" formControlName="buyerName" required>
+      </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Imóvel</mat-label>
+            <mat-select formControlName="propertyId">
+                <mat-option *ngFor="let property of properties" value="{{ property.id }}">
+                    {{ property.id }} ({{ property.type }})
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Vendedor</mat-label>
+          <mat-select formControlName="sellerId">
+              <mat-option *ngFor="let seller of sellers" value="{{ seller._id }}">
+                  {{ seller.name }} ({{ seller.creci }})
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-button (click)="onDismiss()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="create()">Salvar</button>
+</div>

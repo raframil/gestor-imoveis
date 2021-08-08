@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Editar gestor</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <mat-form-field class="full-width" appearance="fill" disabled>
+            <mat-label>Nome do gestor</mat-label>
+            <input matInput placeholder="Nome do gestor" formControlName="name"  readonly>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="fill" disabled>
+            <mat-label>Creci</mat-label>
+            <input matInput placeholder="Creci do gestor" formControlName="creci"  readonly>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="fill" disabled>
+            <mat-label>Tipo do gestor</mat-label>
+            <input matInput placeholder="Tipo do gestor" formControlName="type" readonly>
+
+            <!-- <mat-select formControlName="type">
+                <mat-option *ngFor="let type of types" [value]="type.value">
+                    {{ type.viewValue }}
+                </mat-option>
+            </mat-select> -->
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Salário</mat-label>
+            <input matInput placeholder="Salário" currencyMask formControlName="salary" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="fill" disabled>
+            <mat-label>Data de admissão</mat-label>
+            <input matInput placeholder="Data de admissão" formControlName="admissionDate" mask="00/00/0000"
+            [dropSpecialCharacters]="false"  readonly>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Porcentagem da comissão</mat-label>
+            <input matInput placeholder="Porcentagem da comissão" formControlName="commissionPercentage" required>
+        </mat-form-field>
+
+      </form>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-button (click)="onDismiss()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="update()">Salvar</button>
+</div>
