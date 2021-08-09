@@ -33,9 +33,12 @@ export class AddProfessionalComponent implements OnInit {
       name: ['', [Validators.required, Validators.maxLength(255)]],
       creci: ['', [Validators.required, Validators.maxLength(255)]],
       type: ['', [Validators.required, Validators.maxLength(255)]],
-      salary: ['', [Validators.required, Validators.maxLength(255)]],
+      salary: ['', [Validators.maxLength(255)]],
       admissionDate: ['', [Validators.required, Validators.maxLength(255)]],
-      commissionPercentage: ['', [Validators.required, Validators.maxLength(255)]],
+      commissionPercentage: [
+        '1',
+        [Validators.required, Validators.maxLength(255)],
+      ],
     });
   }
 
@@ -51,7 +54,13 @@ export class AddProfessionalComponent implements OnInit {
     }
 
     const professional: Professional = this.form.value;
-    professional.admissionDate = this.utilService.toDate(professional.admissionDate.toString());
+    professional.admissionDate = this.utilService.toDate(
+      professional.admissionDate.toString()
+    );
+
+    if (professional.type === 'Comissionado') {
+      delete professional.salary;
+    }
 
     this.professionalsService.create(professional).subscribe(
       (res) => {
@@ -60,7 +69,7 @@ export class AddProfessionalComponent implements OnInit {
       (error) => {
         if (error.status === 409) {
           this.toastr.warning(
-            `Um imóvel com o creci ${professional.creci} já existe`,
+            `Um profissional com o creci ${professional.creci} já existe`,
             'Atenção'
           );
         }

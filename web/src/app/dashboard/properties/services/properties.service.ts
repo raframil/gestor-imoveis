@@ -12,12 +12,7 @@ export class PropertiesService {
 
   constructor(private http: HttpClient) {}
 
-  list(query?: string): Observable<Property[]> {
-    let params: HttpParams;
-    if (query) {
-      params = new HttpParams().set('query', query || '');
-    }
-
+  list(params?: HttpParams): Observable<Property[]> {
     return this.http.get<Property[]>(`${this.url}/properties`, {
       params,
     });

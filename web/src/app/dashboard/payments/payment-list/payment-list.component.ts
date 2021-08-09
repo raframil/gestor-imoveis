@@ -42,8 +42,8 @@ export class PaymentListComponent implements OnInit {
   loadingPayment = false;
   professional: any;
 
-  dataSource: MatTableDataSource<DataTable> = new MatTableDataSource([]);
   // tabela
+  dataSource: MatTableDataSource<DataTable> = new MatTableDataSource([]);
   displayedColumns: string[] = [
     'saleDate',
     'buyerName',
@@ -84,7 +84,6 @@ export class PaymentListComponent implements OnInit {
       .subscribe((res) => {
         this.professional = res;
         this.dataSource = new MatTableDataSource(res.professionalSales);
-        console.warn(res);
       })
       .add(() => {
         this.loadingPayment = false;

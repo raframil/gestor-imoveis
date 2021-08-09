@@ -1,3 +1,4 @@
+import { ReportsComponent } from './dashboard/reports/reports.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NavigationComponent } from './dashboard/navigation/navigation.component';
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'pagamentos',
         component: PaymentListComponent,
+      },
+      {
+        path: 'relatorios',
+        component: ReportsComponent,
       },
     ],
   },

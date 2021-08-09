@@ -12,13 +12,8 @@ export class ProfessionalsService {
 
   constructor(private http: HttpClient) {}
 
-  list(query?: string): Observable<Professional[]> {
-    let params: HttpParams;
-    if (query) {
-      params = new HttpParams().set('query', query || '');
-    }
-
-    return this.http.get<Professional[]>(`${this.url}/professionals`, {
+  list(params?: HttpParams): Observable<any> {
+    return this.http.get<any>(`${this.url}/professionals`, {
       params,
     });
   }

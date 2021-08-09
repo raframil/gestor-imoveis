@@ -12,13 +12,21 @@ export class SalesService {
 
   constructor(private http: HttpClient) {}
 
-  list(query?: string): Observable<Sale[]> {
-    let params: HttpParams;
-    if (query) {
-      params = new HttpParams().set('query', query || '');
+  list(income?: number, month?: string, year?: string): Observable<any> {
+    let params = new HttpParams();
+
+    if (month && year && income) {
+      params = new HttpParams()
+        .set('month', month)
+        .set('year', year)
+        .set('income', '1');
     }
 
-    return this.http.get<Sale[]>(`${this.url}/sales`, {
+    if (income && !month && !year) {
+      params = new HttpParams().set('income', '1');
+    }
+
+    return this.http.get<any>(`${this.url}/sales`, {
       params,
     });
   }
