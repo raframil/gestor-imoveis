@@ -1,3 +1,4 @@
+import { UtilService } from './../../../core/services/util/util.service';
 import { Property } from './../models/property';
 import { EditPropertyComponent } from '../edit-property/edit-property.component';
 import { PropertiesService } from '../services/properties.service';
@@ -23,7 +24,8 @@ export class PropertiesComponent implements OnInit {
 
   constructor(
     private propertiesService: PropertiesService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private utilService: UtilService
   ) {}
 
   ngOnInit(): void {
@@ -31,9 +33,11 @@ export class PropertiesComponent implements OnInit {
   }
 
   mapAvailableTypes(properties) {
-    return properties.map((property) => {
-      return property.type;
-    });
+    return properties
+      .map((property) => {
+        return property.type;
+      })
+      .filter((item, index, arry) => arry.indexOf(item) === index);
   }
 
   onChange(type) {

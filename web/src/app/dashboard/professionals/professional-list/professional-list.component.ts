@@ -9,21 +9,18 @@ import {
 } from 'src/app/core/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProfessionalComponent } from '../professional-add/add-professional.component';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-professional-list',
   templateUrl: './professional-list.component.html',
   styleUrls: ['./professional-list.component.css'],
 })
-
 export class ProfessionalListComponent implements OnInit {
   professionals: Professional[] = [];
-  nonFilteredPropertis: Professional[];
+  nonFilteredProfessionals: Professional[];
   loading = false;
-
 
   availableTypes: [];
 
@@ -37,13 +34,15 @@ export class ProfessionalListComponent implements OnInit {
   }
 
   mapAvailableTypes(professionals) {
-    return professionals.map((professional) => {
-      return professional.type;
-    });
+    return professionals
+      .map((professional) => {
+        return professional.type;
+      })
+      .filter((item, index, arry) => arry.indexOf(item) === index);
   }
 
   onChange(type) {
-    this.professionals = this.nonFilteredPropertis;
+    this.professionals = this.nonFilteredProfessionals;
     if (type === 'all') {
       return;
     }
@@ -74,7 +73,7 @@ export class ProfessionalListComponent implements OnInit {
         .list()
         .subscribe((res) => {
           this.professionals = res;
-          this.nonFilteredPropertis = res;
+          this.nonFilteredProfessionals = res;
           this.availableTypes = this.mapAvailableTypes(res);
         })
         .add(() => {
@@ -100,7 +99,7 @@ export class ProfessionalListComponent implements OnInit {
 
   delete(professional: Professional) {
     const message = `Você tem certeza que deseja excluir ${professional.type} de ${professional.creci}?`;
-    const dialogData = new ConfirmDialogModel('Excluir propriedade', message);
+    const dialogData = new ConfirmDialogModel('Excluir profissional', message);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '400px',

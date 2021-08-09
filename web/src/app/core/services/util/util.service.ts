@@ -34,4 +34,8 @@ export class UtilService {
       }
     });
   }
+
+  onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
 }
