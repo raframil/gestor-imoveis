@@ -20,8 +20,7 @@ import { EditProfessionalComponent } from './professionals/professional-edit/edi
 import { AddProfessionalComponent } from './professionals/professional-add/add-professional.component';
 import { AddSaleComponent } from './sales/add-sale/add-sale.component';
 import { SalesComponent } from './sales/list-sale/sales.component';
-
-
+import { PaymentListComponent } from './payments/payment-list/payment-list.component';
 
 export const customCurrencyMaskConfig = {
   align: 'left',
@@ -52,6 +51,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     AddProfessionalComponent,
     AddSaleComponent,
     SalesComponent,
+    PaymentListComponent,
   ],
   imports: [
     CommonModule,

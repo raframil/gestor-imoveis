@@ -4,6 +4,7 @@ import { NavigationComponent } from './dashboard/navigation/navigation.component
 import { ProfessionalListComponent } from './dashboard/professionals/professional-list/professional-list.component';
 import { SalesComponent } from './dashboard/sales/list-sale/sales.component';
 import { PropertiesComponent } from './dashboard/properties/list-property/properties.component';
+import { PaymentListComponent } from './dashboard/payments/payment-list/payment-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'vendas',
         component: SalesComponent,
+      },
+      {
+        path: 'pagamentos',
+        component: PaymentListComponent,
       },
     ],
   },

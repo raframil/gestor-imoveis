@@ -30,7 +30,6 @@ export class AddProfessionalComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.form = this.formBuilder.group({
-      // id: ['', [Validators.required]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       creci: ['', [Validators.required, Validators.maxLength(255)]],
       type: ['', [Validators.required, Validators.maxLength(255)]],
